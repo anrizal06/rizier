@@ -66,15 +66,4 @@ object Primes3 {
 	          candidate 
 	  }
 	}
-	
-	
-	def main(args: Array[String]): Unit = {
-      val now = System.currentTimeMillis 
-      val ps = primes().takeWhile(_ < 100)
-      println(ps.toList)
-      println( "Last number = " + ps.last +
-               " count = " + ps.size +
-               " time = "  + 
-               (System.currentTimeMillis - now))
-   }
 }
