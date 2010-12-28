@@ -20,7 +20,7 @@ object Primes3 {
     *   followed by 15, 21, so on as composite numbers.
     */
 	def primes() : Stream[Int] = {
-	  2 #:: sieve(3, Map.empty)
+	    2 #:: sieve(3, Map{9 -> 6})
 	}
 	
 	
@@ -66,4 +66,15 @@ object Primes3 {
 	          candidate 
 	  }
 	}
+	
+	
+	def main(args: Array[String]): Unit = {
+      val now = System.currentTimeMillis 
+      val ps = primes().takeWhile(_ < 100)
+      println(ps.toList)
+      println( "Last number = " + ps.last +
+               " count = " + ps.size +
+               " time = "  + 
+               (System.currentTimeMillis - now))
+   }
 }
