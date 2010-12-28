@@ -20,7 +20,7 @@ object Primes3 {
     *   followed by 15, 21, so on as composite numbers.
     */
 	def primes() : Stream[Int] = {
-	    2 #:: sieve(3, Map{9 -> 6})
+	    2 #:: sieve(3, Map{ 9 -> 6 })
 	}
 	 
 	
