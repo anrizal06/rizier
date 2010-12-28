@@ -17,7 +17,7 @@ object Primes3 {
     *   It starts with 2 , followed by 3. The map is initialized to 
     *   9 which corresponds to 3 * 3 and 6 is the incremental factor 
     *   for 3. With these two values, the algorithm will find 9 
-    *   followed by 15, 21, so on as composite numbers
+    *   followed by 15, 21, so on as composite numbers.
     */
 	def primes() : Stream[Int] = {
 	  2 #:: sieve(3, Map.empty)
