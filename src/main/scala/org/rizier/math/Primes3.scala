@@ -22,7 +22,7 @@ object Primes3 {
 	def primes() : Stream[Int] = {
 	    2 #:: sieve(3, Map{9 -> 6})
 	}
-	
+	 
 	
 	private def sieve(p: Int, pQ: Map[Int, Int]): Stream[Int] = {
 	  p #:: sieve(nextPrime(p + 2, pQ), pQ )
