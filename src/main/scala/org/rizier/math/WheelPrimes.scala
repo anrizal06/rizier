@@ -12,12 +12,12 @@ package org.rizier.math
 *   2 , 4 , 6, 2 , 6 , 6 , 4 , 2 , 4 , 6 , 
 *   2 , 6 , 4 , 2 , 4 , 2 , 10 , 2 , 10
 */
-object Primes2 {
+object WheelPrimes  {
    /** Creates a circular list from a list.
    *   @param xs the list to be transformed to a circular list.
    */
-   def cycle(xs: List[Int]): Stream[Int] = {
-     lazy val result: Stream[Int] = xs.toStream.append(result)
+   def cycle[A](xs: List[A]): Stream[A] = {
+     lazy val result: Stream[A] = xs.toStream.append(result)
      result
    }
    

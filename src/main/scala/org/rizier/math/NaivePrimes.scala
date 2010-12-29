@@ -4,7 +4,7 @@ package org.rizier.math
 *   The only optimization done in this program is by discarding
 *   all even numbers.
 */
-object Primes1 {
+object NaivePrimes { 
   /** Obtains a stream of prime number. */
   def primes(): Stream[Int] = {
      lazy val ps = 2 #:: sieve(3)

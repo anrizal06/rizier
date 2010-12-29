@@ -7,7 +7,7 @@ package org.rizier.math
 *   the hashmap contains already the number, the search continues to find
 *   the next composite number.
 */
-object Primes3 {
+object HashMapPrimes  {
 	// for the purpose of the algorithm implementation, the hashmap
 	// to be used is the mutable one since we target 
 	// to be able to support > 5 million primes
