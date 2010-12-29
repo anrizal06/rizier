@@ -12,7 +12,7 @@ object LazyCollection {
       0 #:: 1 #:: fib(0, 1)
   }
   
-  /** Returns the stream of power of 2. */
+  /** Returns a stream of power of 2. */
   def powerOf2(): Stream[Long] = Stream.iterate(2)(_ << 1)
   
   /** Returns the stream of factorial number
