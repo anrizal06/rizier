@@ -35,10 +35,10 @@ object Primes3 {
 	*   If the number is not in the list, it stores the number 
 	*   and the corresponding step. 
 	*/
-	private def updateCompositeNumber(
+	private def nextCompositeNumber(
 	      x:Int, step: Int, pQ: Map[Int, Int]): Unit = {
 	  pQ.get(x) match {
-	    case Some(_) => updateCompositeNumber(x + step, step, pQ)
+	    case Some(_) => nextCompositeNumber(x + step, step, pQ)
 	    case None => pQ(x) = step
 	  } 
 	}
@@ -55,7 +55,7 @@ object Primes3 {
 	          // hashmap, and replace it with the next composite 
 	          // number.
 		      pQ -= candidate
-		      updateCompositeNumber(candidate + step, step, pQ) 
+		      nextCompositeNumber(candidate + step, step, pQ) 
 		      nextPrime(candidate + 2, pQ)
 	      case None =>
 	          // found a prime number

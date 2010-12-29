@@ -16,13 +16,12 @@
                     (take-while #(<= (* % %) x) xs))
              (recur (+ x 2) xs)
              (cons x (lazy-seq (next-prime (+ x 2) (conj xs x))))))]
-   (cons 2 (lazy-seq (next-prime 3 []))))
-)
+   (cons 2 (lazy-seq (next-prime 3 [])))))
 
 ; The implementation of primes generation by using wheel 
 ; of number used to discard composite numbers that are factor
 ; of first prime numbers.
-; The wheel can be found from [
+; The wheel can be found from (ONeill 2009).
 (defn wheel-primes 
    "The optimization of lazy naive sieve algorithm 
    by discarding the number divisible by 2, 3, 5, and 7.
@@ -70,18 +69,18 @@
    the next composite number corresponding to a prime number"
    []
   (letfn [
-    (update-sieve [x step sieve]
+    (next-composite [x step sieve]
        (if (sieve x)
        	  ; the composite number is already found previously
 	  (recur (+ x step) step sieve)
-	  ; new found composite number
+	  ; new composite number
 	  (assoc sieve x step)))
     (next-prime [x sieve] 
       (let [step (sieve x)]	    
        (if (sieve x)
           ; found a composite
-          (recur (+ x 2) (update-sieve (+ x step) step (dissoc sieve x)))
-          ; found  a prime
+          (recur (+ x 2) (next-composite (+ x step) step (dissoc sieve x)))
+          ; found a prime
 	  (cons x 
 	    (lazy-seq 
                (next-prime (+ x 2) (assoc sieve (* x x) (* x 2))))))))]
