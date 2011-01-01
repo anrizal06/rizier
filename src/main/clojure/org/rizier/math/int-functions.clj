@@ -1,6 +1,6 @@
 (ns 
   #^{:author "Anwar Rizal"
-     :doc "The prime generator algorithms implementation."}
+     :doc "Functions for integer."}
      org.rizier.math.int-functions)
 
 (defn reverse-num
