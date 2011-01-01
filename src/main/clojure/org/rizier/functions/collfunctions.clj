@@ -17,6 +17,8 @@ org.rizier.functions.collfunctions
       (vec (repeat size initial))
       (filter #(< (first %) size) xs))))
       
+; implementation of the array-based solution for the smallest free number
+; problem (Bird, 2010)
 (defn missing-min 
 	"Finds lazily the  missing numbers in a range (0 .. n).
 	For example (8, 4, 3, 2, 1, 6, 5, 0, 10) returns 7
@@ -27,3 +29,42 @@ org.rizier.functions.collfunctions
      	             false
      	             (count xs)
                      (zipmap xs (cycle [true])))))
+                     
+                     
+; implementation of the divide and conquer solution for the smallest 
+; free number problem (Bird, 2010)
+; it can only return the smallest missing number, not the list of 
+; missing number.
+; The algorithm is explained in (Bird, 2010) with the following as example:
+; (8, 4, 3, 2, 1, 6, 5, 0, 10) 
+; b = 0 + 1 + (9 div 2) = 5, so the list is partitioned into two
+; parts < 5 and > 5:
+; (4, 3, 2, 1, 0) and (8, 6, 5, 10)
+; We expect 5 numbers at the left side, which is the case, so 
+; the missing number must be on the right hand side: (8, 6, 5, 10), then the
+; function is recusively called:
+; b = 5 + 1 + (4 div 2)
+; new partition = (6, 5) and (8, 10)
+; We expect to have 3 at the left partition, but we don't; so the missing 
+; number must be on the left partition.
+; recursively called the function with 5 (6, 5)
+; b = 5 + 1 + (2 div 2) = 7
+; partition = (6, 5) and nil. Since we expect 2 on the left hand side, 
+; and indeed we have 2, it must be on the right hand side then.
+; Hence, 7.
+(defn missing-min-div-conquer
+	"Find lazily the missing number in a range (0..n).
+	For example (8, 4, 3, 2, 1, 6, 5, 0, 10) returns 7
+	(8, 4, 3, 2, 1, 5, 0, 10, 11, 12) returns 6."
+	[xs]
+	(letfn [(min-from [a n xs]
+		(let [b (+ a 1 (quot n 2))
+		      parts (group-by #(< % b) xs)
+		      us (parts true)
+		      vs (parts false)
+		      m (count us)]
+		  (if (zero? n) a
+		     (if (= (- b a) m) 
+		        (min-from b (- n m) vs)
+		        (min-from a m us)))))]
+           (min-from 0 (count xs) xs)))
