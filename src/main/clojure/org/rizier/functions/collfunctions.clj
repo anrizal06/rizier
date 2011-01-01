@@ -1,6 +1,6 @@
 (ns 
   #^{:author "Anwar Rizal"
-     :doc "The prime generator algorithms implementation."}
+     :doc "Utility functions for collection."}
   org.rizier.functions.collfunctions)
 
 (defn accumulate 
