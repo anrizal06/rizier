@@ -55,10 +55,12 @@ org.rizier.functions.collfunctions
 (defn missing-min-div-conquer
 	"Find lazily the missing number in a range (0..n).
 	For example (8, 4, 3, 2, 1, 6, 5, 0, 10) returns 7
-	(8, 4, 3, 2, 1, 5, 0, 10, 11, 12) returns 6."
+	(8, 4, 3, 2, 1, 5, 0, 10, 11, 12) returns 6.
+	In the case where nothing is missing, it returns n + 1."
 	[xs]
 	(letfn [(min-from [a n xs]
 		(let [b (+ a 1 (quot n 2))
+		      ; (us, vs) = xs partition (< b)
 		      parts (group-by #(< % b) xs)
 		      us (parts true)
 		      vs (parts false)
@@ -67,4 +69,8 @@ org.rizier.functions.collfunctions
 		     (if (= (- b a) m) 
 		        (min-from b (- n m) vs)
 		        (min-from a m us)))))]
-           (min-from 0 (count xs) xs)))
+         (min-from 0 (count xs) xs)))
+           	   
+           	   
+           	   
+           	   
