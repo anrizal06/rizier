@@ -1,1 +1,2 @@
 The repository contains several functional algorithms for collections and integer numbers.
+The algorithms are implemented in Scala and Clojure. Whenever possible, the implementations are kept close from one language to the other.
