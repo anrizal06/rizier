@@ -61,5 +61,40 @@ object CollectionFunctions {
        }
        minFrom(0, xs)
    }
+   
+   /** Max surpassing functions that solves the problem of maximum
+   *   surpassing count with  O(n log n) complexity.
+   *   The solution is explained at (Bird, 2010).
+   *   Divide and conquer is the strategy used by the solution.
+   */
+   def maxSurpassing(xs: List[Int]) = {
+      /** Join two tables txs and tys. A table is a list of 
+      *   (number, surpassing count) pair.
+      *   See (Bird, 2010) for the detail of the join algorithm.
+      */
+      def join(txs: List[(Int, Int)], tys: List[(Int, Int)]) :
+                         List[(Int, Int)] = { 
+          if (txs.isEmpty) tys
+          else if (tys.isEmpty) txs
+          else if ( txs.head._1 < tys.head._1 ) 
+                    (txs.head._1, txs.head._2 + tys.size) :: join(txs.tail, tys)
+          else ( tys.head._1, tys.head._2) :: join (txs, tys.tail) 
+      }
+      /** Divides and conquers a list of integer. The function creates
+      *   list of (number, surpassing count) pair. Moreover, the list 
+      *   is sorted by the number part of the pair.
+      */
+      def table(xs: List[Int]): List[(Int, Int)] = {
+         xs match {
+               case Nil => Nil
+               case a::Nil => List( (a,0) )
+               case _ => 
+                    val (ys, zs) = xs.splitAt(xs.size / 2)
+                    join(table(ys), table(zs))
+         }
+      }
+      
+      table(xs).map( _._2).max
+   }
 }
  

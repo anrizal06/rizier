@@ -70,7 +70,48 @@ org.rizier.functions.collfunctions
 		        (min-from b (- n m) vs)
 		        (min-from a m us)))))]
          (min-from 0 (count xs) xs)))
-           	   
-           	   
-           	   
-           	   
+           	
+; The following two functions (join-t and table) are used by
+; max-surpassing functions.
+; The function joins two table txs and tys. The table is a list
+; of (number, surpassing count) pair. 
+; See (Bird, 2010) for the detail of the join algorithm.
+(defn- join-t
+   [n txs tys]
+   (let [x (ffirst txs)
+	 c (second (first txs))
+	 y (ffirst tys)
+	 d (second (first tys))]
+      (cond (zero? n) txs
+	    (empty? txs) tys
+	    :else (if (< x y) 
+		   (cons [x (+ c n)] (join-t n (rest txs) tys))
+                   (cons [y d] (join-t (dec n) txs (rest tys)))))))
+
+; The function creates list of tuple (number, surpassing count) and
+; moreover the tuple is sorted by the number.
+; Example: (table [7 5 13 5 18 1 20 9 14 7]) yields
+; [1 4] [5 5] [5 6] [7 0] [7 5] [9 1] [13 3] [14 0] [18 1] [20 0]
+(defn- table [xs]
+   (let [n (count xs)
+           m (quot n 2)	
+           splitted (split-at m xs)
+           ys (first splitted)
+           zs (second splitted)]
+    (cond (empty? xs) xs	
+    	  (empty? (rest xs)) [ [(first xs) 0] ]
+    :else (join-t (- n m) (table ys) (table zs)))))  
+
+
+ 
+; Max surpassing number solution that has O(n log n) solution.
+; The solution is explained at (Bird, 2010).
+; The strategy used by the algorithm is divide and conquer (see
+; table function)
+(defn max-surpassing 
+  "Gets the maximum surpasser count. The surpasser count of 
+  an element in the collection is the number of elements 
+  right to the number that has value greater to the number itself." 
+  [coll] 
+  (apply max (map second (table coll)))) 	     
+	     
