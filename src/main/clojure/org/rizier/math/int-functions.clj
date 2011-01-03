@@ -48,15 +48,22 @@
      	   	   	   (> zz z) (find-invert u (dec v) f z))))]
      (find-invert 0 z f z)))
      
-     
-(defn bsearch [g left right z]
+; binary search to find the limit of the solution space.
+; g is the function. it must be strictly increasing on each argument.
+; left is the lower bound, right is upper bound
+; z is the number being searched.
+(defn- bsearch [g left right z]
 	(let  [mid (quot (+ left right) 2)
 	       midval (g mid)]
         (if (> left right) left
         	(cond  (<= midval z) (bsearch g (inc mid) right z)
                 (> midval z) (bsearch g left (dec mid) z)))))
-		
-(defn invert [f z]
+
+; Optimized invert.		
+(defn invert 
+    "The optimized invert-simple algorithm. The solution space limit 
+     is no longer (0, z) to (z, z), but from (0,m) to (r,s). "
+     [f z]
     (let [find-invert
     	  (fn find-invert [ [u v] [r s] f z]
      	     (let [zz (f u v)]
