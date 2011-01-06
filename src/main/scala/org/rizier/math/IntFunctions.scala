@@ -64,8 +64,9 @@ object IntFunctions {
  *   m and n.
  */
  def invert(f:(Int, Int) => Int, z: Int) = {
+     import scala.annotation.tailrec
      
-     def findInvert( u: Int, v:Int, r:Int, s: Int, acc: List[ (Int, Int)]):
+     @tailrec def findInvert( u: Int, v:Int, r:Int, s: Int, acc: List[ (Int, Int)]):
         List[ (Int, Int) ]= {
         if (u > r || v < s) acc
         else {
