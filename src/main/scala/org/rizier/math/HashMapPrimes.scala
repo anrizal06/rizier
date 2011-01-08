@@ -43,16 +43,16 @@ object HashMapPrimes  {
 	  } 
 	}
 	
-	/** Finds next prime from a candidate and a hashmap 
+	/** Finds next prime from a candidate and a hash map
 	*   of composite number.
 	*   @param candidate prime number candidate
-	*   @param pQ the hashmap of the composite number.
+	*   @param pQ the hash map of the composite number.
 	*/
 	private def nextPrime(candidate: Int, pQ: Map[Int, Int]): Int = {
 	  pQ.get(candidate) match {
 	      case Some(step) =>
 	          // remove the candidate from the composite number
-	          // hashmap, and replace it with the next composite 
+	          // hash map, and replace it with the next composite
 	          // number.
 		      pQ -= candidate
 		      nextCompositeNumber(candidate + step, step, pQ) 

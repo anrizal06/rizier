@@ -13,11 +13,10 @@ object CollectionFunctions {
       f: (A, A) => A, 
       initial: A, 
       size: Int, 
-      xs: List[(Int, A)] ): IndexedSeq[A] = {
+      xs: List[(Int, A)] ): IndexedSeq[A] =
         xs.view.filter(_._1 < size).foldLeft(Vector.fill(size)(initial))(
                   (v, t) => v.updated (t._1, f(v(t._1), t._2))) 
-   }
-   
+
    /** Finds the first missing number in a list of sequence (0 .. n)
    *   For example (8, 4, 3, 2, 1, 6, 5, 0, 10) returns Some(7)
    *   because 7 is the minimum missing number.
