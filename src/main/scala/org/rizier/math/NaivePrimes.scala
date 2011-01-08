@@ -8,12 +8,13 @@ object NaivePrimes {
   /** Obtains a stream of prime number. */
   def primes(): Stream[Int] = {
      lazy val ps = 2 #:: sieve(3)
-     def sieve(p: Int): Stream[Int] = {
+
+     def sieve(p: Int): Stream[Int] =
          p #:: sieve(
             Stream.from(p + 2, 2).
                 find(i=> ps.takeWhile(j => j * j <= i).
                 forall(i % _ > 0)).get)
-     }
+
      ps
   } 
 }

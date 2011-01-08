@@ -7,8 +7,8 @@ object LazyCollection {
 
   /** Returns the stream of fibonacci number.*/
   def fibonacci(): Stream[Long] = {
-      def fib(a: Long, b: Long): Stream[Long] = 
-         (a + b) #:: fib(b, a + b)
+      def fib(a: Long, b: Long): Stream[Long] =  (a + b) #:: fib(b, a + b)
+
       0 #:: 1 #:: fib(0, 1)
   }
   
