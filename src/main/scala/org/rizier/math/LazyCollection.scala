@@ -18,9 +18,11 @@ object LazyCollection {
   /** Returns the stream of factorial number
   *  (EXPERIMENTAL: not sure to be very useful)
   */
-  def factorial(): Stream[BigDecimal] = {
-     def fact(a: BigDecimal, b: BigDecimal): Stream[BigDecimal] =
+  def factorial(): Stream[BigInt] = {
+
+     def fact(a: BigInt, b: BigInt): Stream[BigInt] =
         b #:: fact((a + 1), b * (a + 1))    
+
      fact(1, 1)
   }
 
