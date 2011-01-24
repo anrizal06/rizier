@@ -13,7 +13,7 @@ object LazyCollection {
   }
   
   /** Returns a stream of power of 2. */
-  def powerOf2(): Stream[Long] = Stream.iterate(2)(_ << 1)
+  def powerOf2(): Stream[Long] = Stream.iterate(2L)(_ << 1)
   
   /** Returns the stream of factorial number
   *  (EXPERIMENTAL: not sure to be very useful)

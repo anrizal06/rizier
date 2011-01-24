@@ -1,5 +1,6 @@
 package org.rizier.functions
 
+
 /** Couple of collection functions. */
 object CollectionFunctions {
    /** Reduces an IndexedSeq (Int, A) xs to an IndexedSeq[A] 
@@ -15,9 +16,29 @@ object CollectionFunctions {
       size: Int, 
       xs: List[(Int, A)] ): IndexedSeq[A] =
         xs.view.filter(_._1 < size).foldLeft(Vector.fill(size)(initial))(
-                  (v, t) => v.updated (t._1, f(v(t._1), t._2))) 
+                  (v, t) => v.updated (t._1, f(v(t._1), t._2)))
 
-   /** Finds the first missing number in a list of sequence (0 .. n)
+  /**Returns the cycle of a list.
+    *
+   */
+  def cycle[A](xs: List[A]): Stream[A] = {
+    lazy val result: Stream[A] = xs.toStream.append(result)
+    result
+  }
+
+  /**Creates a list from a list and a function that maps each element of the list
+   * to a list of element. The result list is the concatenation of the result
+   * of applying the function to each element of the list.
+   *
+   */
+   def concatMap[A, B](xs: List[A], f: A=> List[B]): List[B] = {
+     xs match {
+       case Nil => Nil
+       case head::tail => f(xs.head) ::: concatMap(xs.tail, f)
+     }
+   }
+
+  /**Finds the first missing number in a list of sequence (0 .. n)
    *   For example (8, 4, 3, 2, 1, 6, 5, 0, 10) returns Some(7)
    *   because 7 is the minimum missing number.
    */
@@ -51,12 +72,15 @@ object CollectionFunctions {
    * and indeed we have 2, it must be on the right hand side then.
    * Hence, 7.*/
    def missingMinDivConquer(xs: List[Int]) = {
-       def minFrom(a: Int, xs: List[Int]): Int = {
+
+     def minFrom(a: Int, xs: List[Int]): Int = {
           val b = a + 1 + (xs.size / 2)
           val (us, vs) = xs.partition(_ < b)
+
           if (xs.size == 0) a
           else if ( us.size == (b -a) ) minFrom(b, vs)
           else minFrom(a,us)
+
        }
        minFrom(0, xs)
    }
@@ -79,6 +103,7 @@ object CollectionFunctions {
                     (txs.head._1, txs.head._2 + tys.size) :: join(txs.tail, tys)
           else ( tys.head._1, tys.head._2) :: join (txs, tys.tail) 
       }
+
       /** Divides and conquers a list of integer. The function creates
       *   list of (number, surpassing count) pair. Moreover, the list 
       *   is sorted by the number part of the pair.
@@ -94,6 +119,14 @@ object CollectionFunctions {
       }
       
       table(xs).map( _._2).max
+   }
+
+  /**Makes number by concatenating, adding, or multiplying the number in the list.
+   *  Taken from pearl no.6 of (Bird, 2010).
+   *  See MakeNumber class.
+   */
+   def makeNumber(xs: List[Int], number: Int) = {
+      MakeNumber.solutions(xs, number)
    }
 }
  
