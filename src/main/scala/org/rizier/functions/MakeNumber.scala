@@ -73,5 +73,10 @@ object MakeNumber {
         filter(good).unzip._1
   }
 
+  def displayF(f: Factor) = f.reduceLeft(10 * _ + _).toString
+  def displayT(t: Term)   = t.map(displayF(_)).mkString(" * ")
+  def displayE(e: Expr)   = e.map(displayT(_)).mkString(" + ")
+
+
 
 }

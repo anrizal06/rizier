@@ -16,6 +16,27 @@ org.rizier.functions.collfunctions
    (reduce #(assoc %1 (first %2) (apply-f f %1 %2) )
       (vec (repeat size initial))
       (filter #(< (first %) size) xs))))
+
+; concat-map concatenates lists that obtained by applying a function to
+; each element of a list.
+; for example concat-map [5 7 4] #(range 1 (inc %)) returns
+; (1 2 3 4 5 1 2 3 4 5 6 7 1 2 3 4)
+(defn concat-map
+  "Creates a list from a list and a function f that map each element of the
+  list to another list. The resulting list is the concatenation of the lists
+  obtained by applying the function to the list."
+  [xs f]
+  (if (empty? xs)
+      nil
+      (concat (f (first xs)) (concat-map (rest xs) f))))
+
+; sublists creates all sub lists of a list.
+; for example sublists (1, 4, 5) is (), (1), (4), (5), (1, 4), (4, 5), and (1, 4, 5)
+(defn sublists
+  "Creates all sublists of a list"
+  [xs]
+  (cons nil
+    (mapcat #(partition %1 xs) (range 1 (inc (count ls))))))
       
 ; implementation of the array-based solution for the smallest free number
 ; problem (Bird, 2010)
