@@ -22,21 +22,22 @@ object CollectionFunctions {
     *
    */
   def cycle[A](xs: List[A]): Stream[A] = {
-    lazy val result: Stream[A] = xs.toStream.append(result)
+    lazy val result: Stream[A] = xs toStream append(result)
     result
   }
 
-  /**Creates a list from a list and a function that maps each element of the list
-   * to a list of element. The result list is the concatenation of the result
-   * of applying the function to each element of the list.
+  /** Repeats  an item */
+  def repeat[A](x: A): Stream[A] = {
+    lazy val result: Stream[A] = Stream.cons(x,result)
+    result
+  }
+
+  /**Replicates an item.
    *
    */
-   def concatMap[A, B](xs: List[A], f: A=> List[B]): List[B] = {
-     xs match {
-       case Nil => Nil
-       case head::tail => f(xs.head) ::: concatMap(xs.tail, f)
-     }
-   }
+  def replicate[A](x: A, n: Int): List[A] = {
+    repeat(x) take(n) toList
+  }
 
   /**Finds the first missing number in a list of sequence (0 .. n)
    *   For example (8, 4, 3, 2, 1, 6, 5, 0, 10) returns Some(7)
