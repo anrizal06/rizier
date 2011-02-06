@@ -75,6 +75,20 @@
      	           (> zz z) (find-invert [u (dec v)] [r s] f z))))
      	    m (bsearch #(f 0 %1) 0 z z)
      	    n (bsearch #(f %1 0) 0 z z)]
-     	(find-invert [0 m] [n 0] f z)
-     	           
+     	(find-invert [0 m] [n 0] f z)))
+
+(defn binomial
+    "Calculate the binomial n m."
+    [n m]
+    (let [nminm (- n m)]
+       (if (> m nminm)
+           (quot (reduce * 1 (range (inc m) (inc n)))
+                 (reduce * 1 (range 2 (inc nminm))))
+           (quot (reduce * 1 (range (inc nminm) (inc n)))
+                 (reduce * 1 (range 2 (inc m)))))))
+
+(defn catalan
+    "Return the nth catalan number."
+    [n]
+    (quot (binomial (* n 2) n) (inc n)))
  

@@ -84,6 +84,20 @@ object IntFunctions {
         0, 
         Nil)  
  }
+
+  /** Calculates binomial  n,m = n!/( (n-m)! *  m!)  */
+  def binomial(n: Int, m: Int):BigInt = {
+    if (m > n - m)
+      (m + 1 to n).foldLeft(1: BigInt)(_ * _) / (2 to (n - m)).foldLeft(1:BigInt)(_ * _)
+    else
+      (n - m + 1 to n).foldLeft(1:BigInt)(_ * _) / (2 to m).foldLeft(1:BigInt)(_ * _)
+  }
+
+  /**Returns the nth catalan number.
+   *
+   */
+  def catalan(n: Int): BigInt = binomial(n * 2, n) / (BigInt(n) + 1)
+
 }
 
 
